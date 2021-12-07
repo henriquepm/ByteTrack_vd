@@ -72,7 +72,8 @@ def plot_tracking(image, tlwhs, obj_ids, scores=None, frame_id=0, fps=0., ids2=N
         obj_id = int(obj_ids[i])
         id_text = '{}'.format(int(obj_id))
         if ids2 is not None:
-            id_text = id_text + ', {}'.format(int(ids2[i]))
+            cat = vd_categories[int(ids2[i])]
+            id_text = id_text + ',' + cat
         color = get_color(abs(obj_id))
         cv2.rectangle(im, intbox[0:2], intbox[2:4], color=color, thickness=line_thickness)
         cv2.putText(im, id_text, (intbox[0], intbox[1]), cv2.FONT_HERSHEY_PLAIN, text_scale, (0, 0, 255),
@@ -164,3 +165,17 @@ _COLORS = np.array(
         0.50, 0.5, 0
     ]
 ).astype(np.float32).reshape(-1, 3)
+
+vd_categories = {
+    0 : "pedestrian",
+    1 : "people",
+    2 : "bicycle",
+    3 : "car",
+    4 : "van",
+    5 : "truck",
+    6 : "tricycle",
+    7 : "awning-tricycle",
+    8 : "bus",
+    9 : "motor",
+    10 : "other"
+}

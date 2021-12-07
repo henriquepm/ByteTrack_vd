@@ -27,14 +27,14 @@ import time
 
 
 def write_results(filename, results):
-    save_format = '{frame},{id},{x1},{y1},{w},{h},{s},-1,-1,-1\n'
+    save_format = '{frame},{id},{x1},{y1},{w},{h},{s},{c},-1,-1\n'
     with open(filename, 'w') as f:
-        for frame_id, tlwhs, track_ids, scores in results:
-            for tlwh, track_id, score in zip(tlwhs, track_ids, scores):
+        for frame_id, tlwhs, track_ids, scores, cats in results:
+            for tlwh, track_id, score, cat in zip(tlwhs, track_ids, scores, cats):
                 if track_id < 0:
                     continue
                 x1, y1, w, h = tlwh
-                line = save_format.format(frame=frame_id, id=track_id, x1=round(x1, 1), y1=round(y1, 1), w=round(w, 1), h=round(h, 1), s=round(score, 2))
+                line = save_format.format(frame=frame_id, id=track_id, x1=round(x1, 1), y1=round(y1, 1), w=round(w, 1), h=round(h, 1), s=round(score, 2), c=int(cat))
                 f.write(line)
     logger.info('save results to {}'.format(filename))
 
@@ -135,7 +135,7 @@ class MOTEvaluator:
                 frame_id = info_imgs[2].item()
                 video_id = info_imgs[3].item()
                 img_file_name = info_imgs[4]
-                video_name = img_file_name[0].split('/')[0]
+                video_name = img_file_name[0].split('/')[1] #TODO: Change to 0 for MOT, 1 for VD
                 if video_name == 'MOT17-05-FRCNN' or video_name == 'MOT17-06-FRCNN':
                     self.args.track_buffer = 14
                 elif video_name == 'MOT17-13-FRCNN' or video_name == 'MOT17-14-FRCNN':
@@ -194,6 +194,7 @@ class MOTEvaluator:
                 online_tlwhs = []
                 online_ids = []
                 online_scores = []
+                online_cats = [] #multi_class
                 for t in online_targets:
                     tlwh = t.tlwh
                     tid = t.track_id
@@ -202,8 +203,9 @@ class MOTEvaluator:
                         online_tlwhs.append(tlwh)
                         online_ids.append(tid)
                         online_scores.append(t.score)
+                        online_cats.append(t.category)
                 # save results
-                results.append((frame_id, online_tlwhs, online_ids, online_scores))
+                results.append((frame_id, online_tlwhs, online_ids, online_scores, online_cats))
 
             if is_time_record:
                 track_end = time_synchronized()

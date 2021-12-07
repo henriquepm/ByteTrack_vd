@@ -192,6 +192,7 @@ def image_demo(predictor, vis_folder, path, current_time, save_result):
             online_tlwhs = []
             online_ids = []
             online_scores = []
+            online_cats = []
             for t in online_targets:
                 tlwh = t.tlwh
                 tid = t.track_id
@@ -200,11 +201,12 @@ def image_demo(predictor, vis_folder, path, current_time, save_result):
                     online_tlwhs.append(tlwh)
                     online_ids.append(tid)
                     online_scores.append(t.score)
+                    online_cats.append(t.category)
             # save results
             results.append((frame_id + 1, online_tlwhs, online_ids, online_scores))
             timer.toc()
             online_im = plot_tracking(img_info['raw_img'], online_tlwhs, online_ids, frame_id=frame_id + 1,
-                                          fps=1. / timer.average_time)
+                                          fps=1. / timer.average_time, ids2= online_cats)
         else:
             timer.toc()
             online_im = img_info['raw_img']
@@ -256,6 +258,7 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
                 online_tlwhs = []
                 online_ids = []
                 online_scores = []
+                online_cats = []
                 for t in online_targets:
                     tlwh = t.tlwh
                     tid = t.track_id
@@ -264,10 +267,11 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
                         online_tlwhs.append(tlwh)
                         online_ids.append(tid)
                         online_scores.append(t.score)
+                        online_cats.append(t.category)
                 results.append((frame_id + 1, online_tlwhs, online_ids, online_scores))
                 timer.toc()
                 online_im = plot_tracking(img_info['raw_img'], online_tlwhs, online_ids, frame_id=frame_id + 1,
-                                          fps=1. / timer.average_time)
+                                          fps=1. / timer.average_time, ids2=online_cats)
             else:
                 timer.toc()
                 online_im = img_info['raw_img']

@@ -7,9 +7,9 @@ import cv2
 from yolox import data
 
 
-DATA_PATH = os.path.join('..', '..', 'datasets', 'VisDrone')
+DATA_PATH = os.path.join('..', 'datasets', 'visdrone')
 OUT_PATH = OUT_PATH = os.path.join(DATA_PATH, 'annotations')
-SPLITS = ['VisDrone2019-MOT-train', 'VisDrone2019-MOT-val'] #'VisDrone2019-MOT-train', 'VisDrone2019-MOT-test-dev', 'VisDrone2019-MOT-val']
+SPLITS = ['VisDrone2019-MOT-test-dev'] #'VisDrone2019-MOT-train', 'VisDrone2019-MOT-test-dev', 'VisDrone2019-MOT-val']
 CATEGORIES = [{
           "id": 1,
           "name": "pedestrian",
@@ -65,6 +65,7 @@ if __name__ == '__main__':
         out_path = os.path.join(OUT_PATH, f'{split}.json')
         out = {'images': [], 'annotations' : [], 'videos': [],
                'categories': CATEGORIES}
+        print(os.getcwd())
         seqs = os.listdir(data_path)
         image_cnt = 0
         ann_cnt = 0

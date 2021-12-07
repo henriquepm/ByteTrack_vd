@@ -18,7 +18,7 @@ class Exp(MyExp):
         self.train_ann = "VisDrone2019-MOT-train.json"
         self.val_ann = "VisDrone2019-MOT-val.json"
         self.input_size = (512, 928)
-        self.test_size = (608, 1088)
+        self.test_size = (1088, 1920)
         self.random_size = (12, 26)
         self.max_epoch = 80
         self.print_interval = 20

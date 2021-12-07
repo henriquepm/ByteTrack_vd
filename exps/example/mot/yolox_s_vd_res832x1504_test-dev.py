@@ -16,9 +16,9 @@ class Exp(MyExp):
         self.width = 0.50
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.train_ann = "VisDrone2019-MOT-train.json"
-        self.val_ann = "VisDrone2019-MOT-val.json"
+        self.val_ann = "VisDrone2019-MOT-test-dev.json"
         self.input_size = (512, 928)
-        self.test_size = (608, 1088)
+        self.test_size = (832, 1504)
         self.random_size = (12, 26)
         self.max_epoch = 80
         self.print_interval = 20
@@ -98,7 +98,7 @@ class Exp(MyExp):
             data_dir=os.path.join(get_yolox_datadir(), "visdrone"),
             json_file=self.val_ann,
             img_size=self.test_size,
-            name='VisDrone2019-MOT-val',
+            name='VisDrone2019-MOT-test-dev',
             preproc=ValTransform(
                 rgb_means=(0.485, 0.456, 0.406),
                 std=(0.229, 0.224, 0.225),
