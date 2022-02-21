@@ -1,4 +1,4 @@
-# ByteTrack
+# ByteTrack_vd
 
 This repository is built on [ByteTrack](https://github.com/ifzhang/ByteTrack) to add minimal support for the [VisDrone dataset](http://aiskyeye.com/). For details about the method check the original authors repository or paper:
 
